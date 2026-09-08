@@ -1,0 +1,6 @@
+{
+  "name": "Reck Companion",
+  "description": "Official mobile companion and control surface for the Reck personal AI ecosystem with device orchestration, voice sessions, and biometric approvals.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
