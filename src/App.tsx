@@ -24,6 +24,9 @@ import { TasksView } from './components/views/TasksView';
 import { MemoryView } from './components/views/MemoryView';
 import { AutomationsView } from './components/views/AutomationsView';
 import { IntegrationsView } from './components/views/IntegrationsView';
+import { GmailView } from './components/views/GmailView';
+import { WorkspaceHubView } from './components/views/WorkspaceHubView';
+import { FirebaseDbView } from './components/views/FirebaseDbView';
 import { TrustCenterView } from './components/views/TrustCenterView';
 import { PermissionCenterView } from './components/views/PermissionCenterView';
 import { NotificationsView } from './components/views/NotificationsView';
@@ -60,6 +63,12 @@ const AppContent: React.FC = () => {
         return <AutomationsView />;
       case 'integrations':
         return <IntegrationsView />;
+      case 'gmail':
+        return <GmailView />;
+      case 'workspace':
+        return <WorkspaceHubView />;
+      case 'firebase_db':
+        return <FirebaseDbView />;
       case 'trust_center':
         return <TrustCenterView />;
       case 'permissions':

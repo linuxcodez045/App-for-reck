@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and ecosystem settings in Reck Companion",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "lastActive": { "type": "string" }
+      },
+      "required": ["userId", "email"]
+    },
+    "UserTask": {
+      "title": "UserTask",
+      "description": "User task items synchronized with Google Tasks",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string" },
+        "due": { "type": "string" },
+        "updated": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "status"]
+    },
+    "UserEvent": {
+      "title": "UserEvent",
+      "description": "User calendar events synchronized with Google Calendar",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "summary": { "type": "string" },
+        "description": { "type": "string" },
+        "start": { "type": "string" },
+        "end": { "type": "string" },
+        "meetLink": { "type": "string" },
+        "location": { "type": "string" }
+      },
+      "required": ["id", "userId", "summary"]
+    },
+    "ReckNote": {
+      "title": "ReckNote",
+      "description": "User notes and context memories stored in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "title", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "UserTask",
+      "description": "User tasks"
+    },
+    "/users/{userId}/events/{eventId}": {
+      "schema": "UserEvent",
+      "description": "User calendar events"
+    },
+    "/users/{userId}/notes/{noteId}": {
+      "schema": "ReckNote",
+      "description": "User notes"
+    }
+  }
+}

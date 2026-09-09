@@ -27,7 +27,9 @@ import {
   FileText,
   Lock,
   ChevronRight,
-  ExternalLink
+  ExternalLink,
+  Mail,
+  Database
 } from 'lucide-react';
 
 export const HomeScreen: React.FC = () => {
@@ -229,39 +231,85 @@ export const HomeScreen: React.FC = () => {
         </section>
       )}
 
-      {/* 6. CONTEXTUAL QUICK ACTIONS (Talk, Call, Remote Command) */}
-      <section className="grid grid-cols-3 gap-2.5">
+      {/* 6. CONTEXTUAL QUICK ACTIONS (Talk, Call, Gmail, Remote Command) */}
+      <section className="grid grid-cols-4 gap-2">
         <button
           onClick={() => setActiveScreen('chat')}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
+          className="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
         >
-          <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 mb-1.5 group-hover:scale-110 transition-transform">
-            <Sparkles size={16} />
+          <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 mb-1 group-hover:scale-110 transition-transform">
+            <Sparkles size={15} />
           </div>
-          <span className="text-xs font-semibold text-white">Talk to Reck</span>
-          <span className="text-[10px] text-slate-400 font-mono mt-0.5">Text Chat</span>
+          <span className="text-[11px] font-semibold text-white">Talk</span>
+          <span className="text-[9px] text-slate-400 font-mono">Chat</span>
         </button>
 
         <button
           onClick={startCallReck}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
+          className="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
         >
-          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 mb-1.5 group-hover:scale-110 transition-transform">
-            <PhoneCall size={16} />
+          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 mb-1 group-hover:scale-110 transition-transform">
+            <PhoneCall size={15} />
           </div>
-          <span className="text-xs font-semibold text-white">Call Reck</span>
-          <span className="text-[10px] text-slate-400 font-mono mt-0.5">E2EE Voice</span>
+          <span className="text-[11px] font-semibold text-white">Call</span>
+          <span className="text-[9px] text-slate-400 font-mono">Voice</span>
+        </button>
+
+        <button
+          onClick={() => setActiveScreen('gmail')}
+          className="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
+        >
+          <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400 mb-1 group-hover:scale-110 transition-transform">
+            <Mail size={15} />
+          </div>
+          <span className="text-[11px] font-semibold text-white">Gmail</span>
+          <span className="text-[9px] text-slate-400 font-mono">Inbox</span>
         </button>
 
         <button
           onClick={() => setIsRemoteCommandModalOpen(true)}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
+          className="flex flex-col items-center justify-center p-2.5 rounded-2xl bg-slate-900/40 border border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white transition-all group active:scale-95"
         >
-          <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 mb-1.5 group-hover:scale-110 transition-transform">
-            <Terminal size={16} />
+          <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 mb-1 group-hover:scale-110 transition-transform">
+            <Terminal size={15} />
           </div>
-          <span className="text-xs font-semibold text-white">Remote Action</span>
-          <span className="text-[10px] text-slate-400 font-mono mt-0.5">Dispatch to PC</span>
+          <span className="text-[11px] font-semibold text-white">Remote</span>
+          <span className="text-[9px] text-slate-400 font-mono">Action</span>
+        </button>
+      </section>
+
+      {/* 6B. GOOGLE WORKSPACE & CLOUD SYNC TILES */}
+      <section className="grid grid-cols-2 gap-2">
+        <button
+          onClick={() => setActiveScreen('workspace')}
+          className="p-3 rounded-2xl bg-gradient-to-br from-cyan-950/30 via-slate-900/60 to-slate-900/40 border border-cyan-500/20 hover:border-cyan-500/40 text-left transition-all group active:scale-[0.98]"
+        >
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 group-hover:scale-105 transition-transform">
+              <Sparkles size={14} />
+            </div>
+            <span className="text-[9px] font-mono text-cyan-400 uppercase bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20">
+              Workspace
+            </span>
+          </div>
+          <div className="text-xs font-semibold text-white">Tasks & Calendar</div>
+          <div className="text-[10px] text-slate-400 font-mono mt-0.5">Meet • Drive • People • Chat</div>
+        </button>
+
+        <button
+          onClick={() => setActiveScreen('firebase_db')}
+          className="p-3 rounded-2xl bg-gradient-to-br from-amber-950/30 via-slate-900/60 to-slate-900/40 border border-amber-500/20 hover:border-amber-500/40 text-left transition-all group active:scale-[0.98]"
+        >
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 group-hover:scale-105 transition-transform">
+              <Database size={14} />
+            </div>
+            <span className="text-[9px] font-mono text-amber-400 uppercase bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">
+              Firestore
+            </span>
+          </div>
+          <div className="text-xs font-semibold text-white">Firebase Cloud</div>
+          <div className="text-[10px] text-slate-400 font-mono mt-0.5">Persistent Storage & Sync</div>
         </button>
       </section>
 

@@ -282,3 +282,139 @@ export interface DiagnosticsData {
   e2eeFingerprint: string;
   activeTransport: 'WebRTC / TLS 1.3 DataChannel' | 'WSS / gRPC Proxy';
 }
+
+export interface GmailMessage {
+  id: string;
+  threadId: string;
+  snippet: string;
+  subject: string;
+  from: string;
+  fromName?: string;
+  fromEmail?: string;
+  to: string;
+  date: string;
+  internalDate: string;
+  unread: boolean;
+  starred: boolean;
+  labelIds: string[];
+  bodyHtml?: string;
+  bodyText?: string;
+}
+
+export interface GmailLabel {
+  id: string;
+  name: string;
+  type?: string;
+  messagesTotal?: number;
+  messagesUnread?: number;
+}
+
+export interface GmailSendPayload {
+  to: string;
+  subject: string;
+  body: string;
+  cc?: string;
+  bcc?: string;
+  threadId?: string;
+}
+
+// Google Tasks Types
+export interface GoogleTaskList {
+  id: string;
+  title: string;
+  updated?: string;
+}
+
+export interface GoogleTask {
+  id: string;
+  title: string;
+  notes?: string;
+  status: 'needsAction' | 'completed';
+  due?: string;
+  completed?: string;
+  updated?: string;
+}
+
+// Google Calendar & Meet Types
+export interface GoogleCalendarEvent {
+  id: string;
+  summary: string;
+  description?: string;
+  location?: string;
+  start: {
+    dateTime?: string;
+    date?: string;
+  };
+  end: {
+    dateTime?: string;
+    date?: string;
+  };
+  hangoutLink?: string;
+  meetLink?: string;
+  htmlLink?: string;
+  attendees?: Array<{ email: string; displayName?: string; responseStatus?: string }>;
+}
+
+// Google Contacts (People API) Types
+export interface GoogleContact {
+  resourceName: string;
+  etag?: string;
+  name: string;
+  displayName: string;
+  email?: string;
+  phone?: string;
+  photoUrl?: string;
+  organization?: string;
+  jobTitle?: string;
+}
+
+// Google Chat Types
+export interface GoogleChatSpace {
+  name: string;
+  displayName: string;
+  type: 'ROOM' | 'DM' | 'SPACE_TYPE_UNSPECIFIED';
+  spaceThreadingState?: string;
+}
+
+export interface GoogleChatMessage {
+  name: string;
+  text: string;
+  senderName: string;
+  senderEmail?: string;
+  createTime: string;
+  spaceName: string;
+}
+
+// Google Drive Types
+export interface GoogleDriveFile {
+  id: string;
+  name: string;
+  mimeType: string;
+  modifiedTime: string;
+  size?: string;
+  webViewLink?: string;
+  iconLink?: string;
+  thumbnailLink?: string;
+  starred?: boolean;
+}
+
+// Google Forms Types
+export interface GoogleForm {
+  id: string;
+  title: string;
+  description?: string;
+  documentTitle?: string;
+  responderUri?: string;
+  webViewLink?: string;
+  modifiedTime?: string;
+  questionsCount?: number;
+  responsesCount?: number;
+}
+
+export interface GoogleFormResponse {
+  responseId: string;
+  createTime: string;
+  lastSubmittedTime: string;
+  answers?: Record<string, any>;
+}
+

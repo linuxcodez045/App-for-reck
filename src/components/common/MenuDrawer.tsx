@@ -12,13 +12,16 @@ import {
   Shield,
   Key,
   Layers,
+  Mail,
   User,
   Settings,
   Activity,
   Compass,
   WifiOff,
   RefreshCw,
-  QrCode
+  QrCode,
+  Sparkles,
+  Database
 } from 'lucide-react';
 
 interface MenuDrawerProps {
@@ -47,6 +50,9 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ isOpen, onClose }) => {
     {
       title: 'Ecosystem Intelligence',
       items: [
+        { id: 'workspace' as ActiveScreen, label: 'Google Workspace', sub: 'Tasks, Calendar, Meet, Drive, People, Chat, Forms', icon: Sparkles },
+        { id: 'gmail' as ActiveScreen, label: 'Gmail Hub', sub: 'Inbox, live threads, & AI briefing', icon: Mail },
+        { id: 'firebase_db' as ActiveScreen, label: 'Firebase Firestore', sub: 'Cloud DB persistence & sync rules', icon: Database },
         { id: 'memory' as ActiveScreen, label: 'Reck Memory', sub: 'Permanent knowledge & active context', icon: Brain },
         { id: 'automations' as ActiveScreen, label: 'Automations & Reminders', sub: 'Recurring, upcoming, & watching rules', icon: Zap },
         { id: 'integrations' as ActiveScreen, label: 'Connected Services', sub: 'Google, GitHub, Spotify, & Slack', icon: Layers }

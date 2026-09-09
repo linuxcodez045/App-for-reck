@@ -36,6 +36,9 @@ export type ActiveScreen =
   | 'memory'
   | 'automations'
   | 'integrations'
+  | 'gmail'
+  | 'workspace'
+  | 'firebase_db'
   | 'trustCenter'
   | 'trust_center'
   | 'permissionCenter'
@@ -139,6 +142,7 @@ interface ReckContextType {
   deleteMemoryItem: (id: string) => Promise<void>;
 
   // Notifications
+  addNotification: (notif: { type: any; title: string; message: string; priority?: 'low' | 'normal' | 'high'; deepLink?: { screen: string; params?: Record<string, string> } }) => void;
   markNotificationRead: (id: string) => Promise<void>;
   clearNotifications: () => Promise<void>;
 }
@@ -490,6 +494,91 @@ export const ReckProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return;
       }
 
+      // Check if user asks about Gmail / email
+      if (lower.includes('email') || lower.includes('mail') || lower.includes('gmail') || lower.includes('inbox')) {
+        setReckState('SPEAKING');
+        const reply: Message = {
+          id: `msg_${Date.now() + 1}`,
+          sender: 'reck',
+          content: 'Aapke Gmail inbox mein 1 high-priority unread message hai Elena Rostova se regarding "Project Nova: Architecture Review & Security Cleared". Main aapko Gmail Hub par lekar chalta hoon.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, reply]);
+        voiceService.speak('You have one unread email from Elena regarding Project Nova.', () => {
+          setReckState('IDLE');
+          setActiveScreen('gmail');
+        });
+        return;
+      }
+
+      // Check if user asks about Google Calendar or Meet
+      if (lower.includes('calendar') || lower.includes('meeting') || lower.includes('meet') || lower.includes('schedule')) {
+        setReckState('SPEAKING');
+        const reply: Message = {
+          id: `msg_${Date.now() + 1}`,
+          sender: 'reck',
+          content: 'Opening your Google Calendar & Meet Hub. You have 2 upcoming meetings synchronized.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, reply]);
+        voiceService.speak('Opening Google Calendar and Meet.', () => {
+          setReckState('IDLE');
+          setActiveScreen('workspace');
+        });
+        return;
+      }
+
+      // Check if user asks about Google Tasks / to-do
+      if (lower.includes('task') || lower.includes('todo') || lower.includes('to-do')) {
+        setReckState('SPEAKING');
+        const reply: Message = {
+          id: `msg_${Date.now() + 1}`,
+          sender: 'reck',
+          content: 'Opening Google Tasks. Your tasks are synchronized across your Google account and Firebase cloud.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, reply]);
+        voiceService.speak('Opening Google Tasks.', () => {
+          setReckState('IDLE');
+          setActiveScreen('workspace');
+        });
+        return;
+      }
+
+      // Check if user asks about Google Drive
+      if (lower.includes('drive') || lower.includes('document') || lower.includes('files')) {
+        setReckState('SPEAKING');
+        const reply: Message = {
+          id: `msg_${Date.now() + 1}`,
+          sender: 'reck',
+          content: 'Opening Google Drive. Your cloud architectural docs and spreadsheets are synchronized.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, reply]);
+        voiceService.speak('Opening Google Drive files.', () => {
+          setReckState('IDLE');
+          setActiveScreen('workspace');
+        });
+        return;
+      }
+
+      // Check if user asks about Firebase or Cloud DB
+      if (lower.includes('firebase') || lower.includes('firestore') || lower.includes('database') || lower.includes('cloud sync')) {
+        setReckState('SPEAKING');
+        const reply: Message = {
+          id: `msg_${Date.now() + 1}`,
+          sender: 'reck',
+          content: 'Accessing Firebase Firestore live database (hypnic-bongo-0ghtt). Verifying security rules and cloud synchronization.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, reply]);
+        voiceService.speak('Accessing Firebase Firestore database.', () => {
+          setReckState('IDLE');
+          setActiveScreen('firebase_db');
+        });
+        return;
+      }
+
       // Check if command to open Chrome or apps
       if (lower.includes('chrome') || lower.includes('spotify') || lower.includes('kholo') || lower.includes('open')) {
         await dispatchRemoteCommand(targetDeviceId || 'dev_pc_home', content);
@@ -648,6 +737,20 @@ export const ReckProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     await refreshData();
   }, [refreshData]);
 
+  const addNotification = useCallback((notif: { type: any; title: string; message: string; priority?: 'low' | 'normal' | 'high'; deepLink?: { screen: string; params?: Record<string, string> } }) => {
+    const newNotif: NotificationItem = {
+      id: `notif_${Date.now()}`,
+      type: notif.type,
+      title: notif.title,
+      message: notif.message,
+      timestamp: 'Just now',
+      read: false,
+      deepLink: notif.deepLink || { screen: 'gmail' },
+      priority: notif.priority || 'normal'
+    };
+    setNotifications(prev => [newNotif, ...prev]);
+  }, []);
+
   return (
     <ReckContext.Provider
       value={{
@@ -710,6 +813,7 @@ export const ReckProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         toggleAutomation,
         saveMemoryItem,
         deleteMemoryItem,
+        addNotification,
         markNotificationRead,
         clearNotifications
       }}

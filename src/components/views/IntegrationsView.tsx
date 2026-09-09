@@ -13,11 +13,15 @@ import {
   RefreshCw,
   ExternalLink,
   Shield,
-  Key
+  Key,
+  Mail
 } from 'lucide-react';
+import { getCurrentUser, getAccessToken } from '../../services/gmailService';
 
 export const IntegrationsView: React.FC = () => {
   const { integrations, setActiveScreen } = useReck();
+  const googleUser = getCurrentUser();
+  const hasLiveGmailToken = Boolean(getAccessToken());
 
   return (
     <div className="flex-1 w-full px-4 pt-3 pb-8 space-y-4 animate-in fade-in duration-200">
@@ -88,13 +92,25 @@ export const IntegrationsView: React.FC = () => {
                 Last synced: {integ.lastSynced}
               </span>
 
-              <button
-                onClick={() => alert(`Synchronized ${integ.name} data channel.`)}
-                className="flex items-center space-x-1 font-mono text-xs text-cyan-400 hover:underline"
-              >
-                <RefreshCw size={11} />
-                <span>Sync Now</span>
-              </button>
+              <div className="flex items-center space-x-3">
+                {integ.serviceId === 'gmail' && (
+                  <button
+                    onClick={() => setActiveScreen('gmail')}
+                    className="flex items-center space-x-1 font-mono text-xs text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg border border-cyan-500/30 transition-colors"
+                  >
+                    <Mail size={12} />
+                    <span>Open Gmail Hub</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => alert(`Synchronized ${integ.name} data channel.`)}
+                  className="flex items-center space-x-1 font-mono text-xs text-cyan-400 hover:underline"
+                >
+                  <RefreshCw size={11} />
+                  <span>Sync</span>
+                </button>
+              </div>
             </div>
           </div>
         ))}
